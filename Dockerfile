@@ -1,18 +1,11 @@
 FROM alpine:latest
 
-LABEL maintainer="Ramazan APAYDIN <apaydin541@gmail.com>"
+LABEL maintainer="TungNT"
 
-# Install PowerDNS & SQLite Backend
-RUN apk --update --no-cache add pdns pdns-backend-sqlite3 && \
+# Install PowerDNS 
+RUN apk --update --no-cache add pdns pdns-backend-remote && \
     rm -rf /var/cache/apk/*
 
-# Create Directory
-RUN mkdir /pdns && \
-    chmod 755 -R /pdns && \
-    chown -R pdns:pdns /pdns
-
-# Copy Configuration
-ADD ./schema.sql /
 ADD ./entrypoint.sh /
 ADD ./pdns.conf /etc/pdns/
 
